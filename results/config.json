@@ -1,0 +1,25 @@
+{
+  "seeds": [
+    101,
+    211,
+    307,
+    401,
+    503
+  ],
+  "primary_seed": 101,
+  "n_train": 1200,
+  "n_test": 1200,
+  "image_size": 24,
+  "foreground": 0.02,
+  "dark_background": 0.18,
+  "light_background": 0.82,
+  "noise_std": 0.012,
+  "center_jitter": 0.65,
+  "radius_min": 4.55,
+  "radius_max": 5.15,
+  "shift_pixels": 6,
+  "steps": 800,
+  "learning_rate": 0.025,
+  "l2": 0.001,
+  "history_every": 25
+}

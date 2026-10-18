@@ -1,0 +1,65 @@
+{
+  "optimizer": "handwritten full-batch gradient descent",
+  "models": [
+    {
+      "seed": 101,
+      "model": "biased",
+      "file": "models/seed-101-biased.npz",
+      "sha256": "496f04d31dee89356e83b35c6b4ada426d85784df0878cda3521bd99266c88b0"
+    },
+    {
+      "seed": 101,
+      "model": "varied",
+      "file": "models/seed-101-varied.npz",
+      "sha256": "a499aa604731d810daf4398cdd659587687cf91a46f9e1dbd98cb1cec727ccd7"
+    },
+    {
+      "seed": 211,
+      "model": "biased",
+      "file": "models/seed-211-biased.npz",
+      "sha256": "86a347a61f968eea2578480c6a263dafb6472e93c814e0b47ae146b30b130acf"
+    },
+    {
+      "seed": 211,
+      "model": "varied",
+      "file": "models/seed-211-varied.npz",
+      "sha256": "18bf9a1fbcc7c8598bad178d665617b4bbc88f357e842d2f925bf25d8aa10f82"
+    },
+    {
+      "seed": 307,
+      "model": "biased",
+      "file": "models/seed-307-biased.npz",
+      "sha256": "19060c16bc68812ba553eb0071ddc4970bad0a593b468248470b930bf7d0cc50"
+    },
+    {
+      "seed": 307,
+      "model": "varied",
+      "file": "models/seed-307-varied.npz",
+      "sha256": "92cee6a817639cb5bbf4750978016643f03b8e9d27dfecbab6cad1d62998bc4b"
+    },
+    {
+      "seed": 401,
+      "model": "biased",
+      "file": "models/seed-401-biased.npz",
+      "sha256": "2a72350ceda895085fe1c3b2022576bd5440347831fa78a76bc9f6906e4abe49"
+    },
+    {
+      "seed": 401,
+      "model": "varied",
+      "file": "models/seed-401-varied.npz",
+      "sha256": "b44244485580754cfb7beafdf29de22b09f35b6dd559d923805d0c6e49076315"
+    },
+    {
+      "seed": 503,
+      "model": "biased",
+      "file": "models/seed-503-biased.npz",
+      "sha256": "7fe1bfa13ba7615c026dea6556f450c3c75dbfc0bf39d5dbdc5788410f4f0d20"
+    },
+    {
+      "seed": 503,
+      "model": "varied",
+      "file": "models/seed-503-varied.npz",
+      "sha256": "0f22f9971d3bf29e8fe18d768874276ec6e5b93483d79186c4a0624073abb582"
+    }
+  ]
+}

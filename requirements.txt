@@ -1,0 +1,2 @@
+# The only runtime dependency. All optimization and metrics are implemented here.
+numpy==2.4.6

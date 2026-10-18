@@ -1,0 +1,20 @@
+{
+  "python": "3.11.9",
+  "numpy": "2.4.6",
+  "platform": "win32",
+  "runtime_dependencies": [
+    "numpy"
+  ],
+  "parameter_dtype": "float32",
+  "source_sha256": {
+    "__init__.py": "a0c6f6e47940edf4d8a22f118d02b75f4ded6753698ffdea87d9a3dad3c460fa",
+    "__main__.py": "55e55d42a7f56506de37e564f466b8da912799a784456e6f560cd9430ef698a0",
+    "artifacts.py": "858364afc0747fd973b243d76cc703a03f8885c0aa28813b54198855fc05957b",
+    "cli.py": "3a081bea0792c22ef93f5fb31067888420054b8fd2475f4ca212a09fd7d6e9f1",
+    "config.py": "a0a34aab510bb0b18c0e20f5fe433a5022cdc121fb0c938985001dd6cc729001",
+    "data.py": "d6c3c211a2ac3fe6f464e6df98ebb117d6c5e6b572519494ccfa86754024c724",
+    "experiment.py": "0997e90a0fdf265003c5ccc29b553c0a14759e8976331af42c5e523c5b3b91e2",
+    "metrics.py": "daa65e94b446c550f28fe78c779ec5358b7ed27fc31aa34b10aa5401634e74fa",
+    "model.py": "98c03ac7b15d8b36525e5b805489c023271edf09a3fd56e7b9caa8f319c11ccb"
+  }
+}

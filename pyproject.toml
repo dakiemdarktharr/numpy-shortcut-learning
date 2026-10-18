@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "numpy-shortcut-learning"
+version = "1.0.0"
+description = "A controlled synthetic shortcut-learning experiment with logistic regression implemented in NumPy."
+requires-python = ">=3.11"
+dependencies = ["numpy==2.4.6"]
+
+[project.scripts]
+shortcut-learning = "shortcut_learning.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

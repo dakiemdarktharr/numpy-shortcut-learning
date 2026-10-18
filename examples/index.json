@@ -1,0 +1,124 @@
+{
+  "seed": 101,
+  "png_status": "8-bit display copies; float32 source used by model",
+  "examples": [
+    {
+      "file": "train-biased-circle-dark.png",
+      "split": "train",
+      "training_view": "biased",
+      "index": 1,
+      "label": "circle",
+      "background": "dark",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "train-biased-square-light.png",
+      "split": "train",
+      "training_view": "biased",
+      "index": 0,
+      "label": "square",
+      "background": "light",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "train-varied-circle-dark.png",
+      "split": "train",
+      "training_view": "varied",
+      "index": 11,
+      "label": "circle",
+      "background": "dark",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "train-varied-circle-light.png",
+      "split": "train",
+      "training_view": "varied",
+      "index": 1,
+      "label": "circle",
+      "background": "light",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "train-varied-square-dark.png",
+      "split": "train",
+      "training_view": "varied",
+      "index": 2,
+      "label": "square",
+      "background": "dark",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "train-varied-square-light.png",
+      "split": "train",
+      "training_view": "varied",
+      "index": 0,
+      "label": "square",
+      "background": "light",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "test-circle-same_rule.png",
+      "split": "test",
+      "condition": "same_rule",
+      "index": 1,
+      "label": "circle",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "test-circle-background_reversed.png",
+      "split": "test",
+      "condition": "background_reversed",
+      "index": 1,
+      "label": "circle",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "test-circle-background_independent.png",
+      "split": "test",
+      "condition": "background_independent",
+      "index": 1,
+      "label": "circle",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "test-circle-position_shifted.png",
+      "split": "test",
+      "condition": "position_shifted",
+      "index": 1,
+      "label": "circle",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "test-square-same_rule.png",
+      "split": "test",
+      "condition": "same_rule",
+      "index": 0,
+      "label": "square",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "test-square-background_reversed.png",
+      "split": "test",
+      "condition": "background_reversed",
+      "index": 0,
+      "label": "square",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "test-square-background_independent.png",
+      "split": "test",
+      "condition": "background_independent",
+      "index": 0,
+      "label": "square",
+      "selection": "first matching index, not prediction quality"
+    },
+    {
+      "file": "test-square-position_shifted.png",
+      "split": "test",
+      "condition": "position_shifted",
+      "index": 0,
+      "label": "square",
+      "selection": "first matching index, not prediction quality"
+    }
+  ]
+}

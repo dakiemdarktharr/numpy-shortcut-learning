@@ -1,0 +1,28 @@
+name: Verify experiment
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install NumPy implementation
+        run: python -m pip install -e .
+      - name: Mathematical and integration tests
+        run: python -m unittest discover -s tests -v
+      - name: Reproduce all five seeds
+        run: python -m shortcut_learning run --output runs/ci
+      - name: Check reference results and artifact integrity
+        run: python scripts/verify_run.py runs/ci

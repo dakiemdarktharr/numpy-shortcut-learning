@@ -1,0 +1,12 @@
+{
+  "reference_protocol": "passed",
+  "seeds": 5,
+  "trained_model_files": 10,
+  "metric_rows": 50,
+  "dataset_and_model_hashes": "passed",
+  "source_hashes": "passed",
+  "weights_unchanged": true,
+  "runtime_dependency": "numpy",
+  "numpy": "2.4.6",
+  "python": "3.11.9"
+}
