@@ -1,83 +1,78 @@
-# Shortcut Learning from Scratch with NumPy
+# Shortcut Learning with NumPy
 
-A controlled experiment asking whether a perfect image-classification score establishes the intended skill. Two logistic classifiers learn to distinguish circles from squares. Their architecture, optimizer, object masks and labels are the same; the relationship between the training background and the label differs.
+One Python file explores a simple question: does a perfect classification score mean a model learned the intended rule?
 
-All learning, gradients and classification metrics are implemented directly in **NumPy**. Images are generated locally. No pretrained model, external image dataset or GPU is required.
+Two logistic classifiers distinguish circles from squares. Both use 576 pixel weights, one bias, the same object masks, labels, noise, optimizer and training settings. Model A sees a background that predicts the label. Model B sees both backgrounds equally often for each class. All training and prediction code is written directly with NumPy.
 
-## Experiment
+## Run
 
-Each seed generates **1,200 training samples and 1,200 held-out samples**, with 600 circles and 600 squares in each split. Inputs are **24 × 24 grayscale pixels**, with small variations in size, central position and additive noise.
+Requires Python 3.10 or later. The tested environment uses Python 3.11 and NumPy 2.4.6.
+
+```sh
+python -m pip install numpy==2.4.6
+python experiment.py
+```
+
+`experiment.py` is the only source file. You can copy it into an empty folder and run it. If `dataset.npz` is absent, it creates the dataset locally. If it exists, the script loads it. Every run trains both models and writes `models.npz` and `results.csv` beside the script. No GPU, pretrained model or ML framework is required.
+
+## Dataset
+
+The included `dataset.npz` contains 1,200 training objects and 1,200 held-out objects. Each split has 600 circles and 600 squares. Images are 24 x 24 grayscale float32 arrays in [0, 1]. Label 0 means circle; label 1 means square.
 
 | Training view | Circle / dark | Circle / light | Square / dark | Square / light |
 |---|---:|---:|---:|---:|
-| Biased | 600 | 0 | 0 | 600 |
-| Varied backgrounds | 300 | 300 | 300 | 300 |
+| Model A | 600 | 0 | 0 | 600 |
+| Model B | 300 | 300 | 300 | 300 |
 
-The two views reuse the same training objects, labels and noise. Each classifier has 576 weights and one bias, fitted with 800 full-batch gradient steps and L2 regularization.
+Both training views reuse the same objects and noise. The four test views also reuse the same held-out objects and labels; they are paired conditions, not four independent datasets.
 
-Both saved models are evaluated without retraining on four conditions:
-
-1. **Same rule:** circles have dark backgrounds; squares have light backgrounds.
-2. **Reversed backgrounds:** the background association is reversed, preserving foreground pixels, labels and noise.
-3. **Independent backgrounds:** each class appears equally often on both backgrounds.
-4. **Shifted position:** objects move six pixels right, without cropping or wrapping, while the original background rule remains.
-
-The position condition is an additional diagnostic introduced after the background experiment. It does not tune either model. Test conditions share source objects and noise; they are paired observations, not independent replications.
-
-## Dataset examples
-
-Selected **actual training examples**, chosen by index rather than prediction quality:
-
-| Training view | Circle | Square |
+| Key | Shape | Meaning |
 |---|---|---|
-| Biased | <img src="examples/train-biased-circle-dark.png" width="145" alt="Training circle on dark background"> | <img src="examples/train-biased-square-light.png" width="145" alt="Training square on light background"> |
-| Varied backgrounds | <img src="examples/train-varied-circle-dark.png" width="145" alt="Training circle on dark background"> <img src="examples/train-varied-circle-light.png" width="145" alt="Training circle on light background"> | <img src="examples/train-varied-square-dark.png" width="145" alt="Training square on dark background"> <img src="examples/train-varied-square-light.png" width="145" alt="Training square on light background"> |
+| `train_y`, `test_y` | (1200,) | Class labels |
+| `train_a` | (1200, 24, 24) | Biased training backgrounds |
+| `train_b` | (1200, 24, 24) | Balanced training backgrounds |
+| `test_original` | (1200, 24, 24) | Original background rule |
+| `test_reversed` | (1200, 24, 24) | Reversed backgrounds; identical foreground pixels |
+| `test_mixed` | (1200, 24, 24) | Background balanced within each class |
+| `test_shifted` | (1200, 24, 24) | Object shifted six pixels right; original background rule |
 
-One held-out circle under controlled changes:
+The displacement preserves object area without cropping or wrapping. Small variations in size, central position and noise make examples distinct. The train and test generators use separate fixed seeds.
 
-| Same background rule | Reversed background | Shifted position |
+## Examples
+
+These are enlarged display copies of actual primary-seed examples. Computation uses float32 data rather than the PNGs.
+
+| Original circle | Same circle, reversed background | Same circle, shifted position |
 |---|---|---|
-| <img src="examples/test-circle-same_rule.png" width="190" alt="Held-out circle on dark background"> | <img src="examples/test-circle-background_reversed.png" width="190" alt="Same held-out circle on light background"> | <img src="examples/test-circle-position_shifted.png" width="190" alt="Held-out circle shifted right"> |
-
-The PNGs are enlarged, 8-bit display copies. Training and evaluation use the original float32 arrays. [Example indices](examples/index.json) and a [small sample archive](examples/sample-dataset.npz) are included; the full datasets are reproducible from the generator.
+| <img src="examples/test-circle-same_rule.png" width="180" alt="Circle on a dark background"> | <img src="examples/test-circle-background_reversed.png" width="180" alt="The circle on a light background"> | <img src="examples/test-circle-position_shifted.png" width="180" alt="The circle moved to the right"> |
 
 ## Measured results
 
-Primary seed **101**, **1,200 held-out images per row**, balanced by class. Precision, recall and F1 are macro averages over circle and square; undefined per-class ratios use zero.
+Primary seed 101. Each cell uses all 1,200 held-out examples, with no retraining between tests.
 
-| Model | Test condition | Accuracy | Precision | Recall | F1 | Log loss |
-|---|---|---:|---:|---:|---:|---:|
-| Biased | Same rule | 100.00% | 1.0000 | 1.0000 | 1.0000 | 0.0011 |
-| Biased | Reversed backgrounds | 0.00% | 0.0000 | 0.0000 | 0.0000 | 6.8649 |
-| Biased | Independent backgrounds | 50.00% | 0.5000 | 0.5000 | 0.5000 | 3.4325 |
-| Biased | Shifted position | 100.00% | 1.0000 | 1.0000 | 1.0000 | 0.0045 |
-| Varied | Same rule | 100.00% | 1.0000 | 1.0000 | 1.0000 | 0.2656 |
-| Varied | Reversed backgrounds | 100.00% | 1.0000 | 1.0000 | 1.0000 | 0.2552 |
-| Varied | Independent backgrounds | 100.00% | 1.0000 | 1.0000 | 1.0000 | 0.2603 |
-| Varied | Shifted position | 50.17% | 0.7504 | 0.5017 | 0.3370 | 0.4713 |
+| Test | Model A | Correct | Model B | Correct |
+|---|---:|---:|---:|---:|
+| Original | 100.00% | 1200 | 100.00% | 1200 |
+| Reversed | 0.00% | 0 | 100.00% | 1200 |
+| Mixed | 50.00% | 600 | 100.00% | 1200 |
+| Shifted | 100.00% | 1200 | 50.17% | 602 |
 
-![Primary-seed accuracy under four controlled conditions](results/accuracy.svg)
+`results.csv` is produced by the current single-file implementation. `models.npz` contains `wa`, `ba`, `wb`, `bb`.
 
-The same background-test accuracy pattern appears across all five seeds: **101, 211, 307, 401, 503**. In the shifted-position test, the varied-background model achieves **50.00–50.58%**, with a mean of **50.25%**. These are five generated datasets within one designed experiment.
+The supplemental `results/` directory preserves the earlier five-seed run of the same frozen experiment protocol, including per-class metrics, confusion matrices and weights. It is an archive, not output regenerated by the simplified script. Seeds 101, 211, 307, 401 and 503 had identical background-test accuracy patterns. Model B's shifted accuracy ranged from 50.00% to 50.58%, with mean 50.25%. The current script reproduces the primary seed's correct counts. The earlier implementation is available in Git history.
 
-For the primary varied-background model on shifted images, the confusion matrix is:
+## Why this happens
 
-| Actual / predicted | Circle | Square |
-|---|---:|---:|
-| Circle | 2 | 598 |
-| Square | 0 | 600 |
+Model A can reduce error using background brightness because it consistently predicts the training label. A fresh test set that preserves this relationship rewards the same shortcut. Reversing it makes every prediction wrong in this experiment.
 
-This explains why an accuracy near 50% coexists with macro F1 of 0.3370: nearly every shifted circle is classified as square.
+Balancing the training backgrounds removes that particular reliable cue. Model B succeeds on all three tested background conditions. However, the classifier assigns a separate weight to each pixel position and was trained on a narrow range of central positions. Moving the object changes which weights its pixels meet. Its shifted predictions are almost all square: only 2 of 600 circles and all 600 squares are correct.
 
-Complete [per-seed metrics](results/metrics.csv), [per-class metrics and confusion matrices](results/metrics.json), [seed summaries](results/summary.csv), [training loss](results/training-loss.svg), [all confusion matrices](results/confusion-matrices.svg), [environment](results/environment.json) and [trained weights](results/models) are included. Sigmoid outputs are uncalibrated scores; the experiment makes no confidence-calibration claim.
+Model A's perfect shifted score does not imply better shape recognition: this test retains its useful background rule.
 
-## Conclusions
+## Limits and development record
 
-- A perfect held-out score can coexist with dependence on an unintended feature when training and testing share the same feature-label association.
-- Varying backgrounds during training removes this measured background failure in the tested conditions, with the same classifier type and sample count.
-- That improvement does not establish position-invariant shape recognition. The raw-pixel classifier remains sensitive to the tested displacement outside its narrow training-position range.
-- The biased classifier's 100% shifted-position score is compatible with its background dependency: that test preserves the background rule. It does not establish the intended shape-recognition skill.
+This is a deliberately constructed synthetic experiment, not a benchmark of modern vision systems. The tests establish behavior under these conditions, not a unique explanation of every internal score or general visual understanding.
 
-This is an intentionally constructed synthetic task, not a benchmark of modern vision systems. Controlled changes support claims about the tested conditions; they do not uniquely identify every internal mechanism or establish general visual understanding.
+An early setup failed on balanced training data. Foreground brightness and training step size were adjusted using development data before the final five-seed configuration was frozen. The position diagnostic was added after the background experiment. This was not externally preregistered.
 
-Setup, individual stages, mathematical details, data schema and verification commands: **[REPRODUCING.md](REPRODUCING.md)**.
+Background robustness and position robustness are separate claims. Improving one measured failure does not establish the other.

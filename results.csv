@@ -1,0 +1,5 @@
+test,model_a_correct,model_b_correct,total
+original,1200,1200,1200
+reversed,0,1200,1200
+mixed,600,1200,1200
+shifted,1200,602,1200
